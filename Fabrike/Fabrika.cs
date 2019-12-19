@@ -45,7 +45,7 @@ namespace ProductionSimulation.Fabrike
             {
                 trenutniNadzornik = "Nadzornik nije u sistemu.";
             }
-            using(StreamWriter writer = new StreamWriter("C:\\Users\\Srdjan\\Desktop\\Web Applications\\ProductionSimulation\\Logs\\KreiranProizvodLog.txt", true))
+            using(StreamWriter writer = new StreamWriter("C:\\Users\\Srdjan\\Desktop\\Projects\\ProductionSimulation\\Logs\\KreiranProizvodLog.txt", true))
             {
                 DateTime time = DateTime.Now;
                 while(n < kolicina)
