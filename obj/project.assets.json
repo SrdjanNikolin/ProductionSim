@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Srdjan\\Desktop\\Web Applications\\ProductionSimulation\\ProductionSimulation.csproj",
+      "projectUniqueName": "C:\\Users\\Srdjan\\Desktop\\Projects\\ProductionSimulation\\ProductionSimulation.csproj",
       "projectName": "ProductionSimulation",
-      "projectPath": "C:\\Users\\Srdjan\\Desktop\\Web Applications\\ProductionSimulation\\ProductionSimulation.csproj",
+      "projectPath": "C:\\Users\\Srdjan\\Desktop\\Projects\\ProductionSimulation\\ProductionSimulation.csproj",
       "packagesPath": "C:\\Users\\Srdjan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Srdjan\\Desktop\\Web Applications\\ProductionSimulation\\obj\\",
+      "outputPath": "C:\\Users\\Srdjan\\Desktop\\Projects\\ProductionSimulation\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
