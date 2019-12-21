@@ -25,17 +25,15 @@ namespace ProductionSimulation
             Kompanija kompanijaTest = new Kompanija();
             kompanijaTest.DodajFabriku("Asus");
             kompanijaTest.DodajProdajnoMesto("Gigatron");
-            //kompanijaTest.GetFabrika("Asus").DodajRadnika("Marko Markovic", "radnik", 1, 2);
-            //kompanijaTest.GetFabrika("Asus").DodajRadnika("Maja Miscevic", "nadzornik za proizvodnju", 2);
-            //kompanijaTest.GetFabrika("Asus").DodajRadnika("Nikola Nikolic", "nadzornik za transport", 3);
-            //kompanijaTest.GetProdajnoMesto("Gigatron").DodajZaposlenog("Petar Petrovski", "prodavac", 3);
-            //kompanijaTest.ListaFabrika.Find(f => f.Naziv == "Asus").KreirajProizvod(20, 1, "Monitor", 80, 2);
-            //int[] zahtev = kompanijaTest.GetProdajnoMesto("Gigatron").ZahtevVersion1(10, 50);
-            //kompanijaTest.ListaFabrika.Find(f => f.Naziv == "Asus").Transport(kompanijaTest.GetProdajnoMesto("Gigatron"), zahtev, 3);
-            //Kupac kupac = new Kupac("Stefan Simanic", 500);
-            //kupac.Kupi(kompanijaTest.GetProdajnoMesto("Gigatron"), 1, NacinPlacanja.Kes);
-            Dictionary<int, int> testZahtev = kompanijaTest.GetProdajnoMesto("Gigatron").ZahtevVersion2();
-
+            kompanijaTest.GetFabrika("Asus").DodajRadnika("Marko Markovic", "radnik", 1, 2);
+            kompanijaTest.GetFabrika("Asus").DodajRadnika("Maja Miscevic", "nadzornik za proizvodnju", 2);
+            kompanijaTest.GetFabrika("Asus").DodajRadnika("Nikola Nikolic", "nadzornik za transport", 3);
+            kompanijaTest.GetProdajnoMesto("Gigatron").DodajZaposlenog("Petar Petrovski", "prodavac", 3);
+            kompanijaTest.ListaFabrika.Find(f => f.Naziv == "Asus").KreirajProizvod(20, 1, "Monitor", 80, 2);
+            Dictionary<int, int> zahtev = kompanijaTest.GetProdajnoMesto("Gigatron").ZahtevZaIsporuku();
+            kompanijaTest.ListaFabrika.Find(f => f.Naziv == "Asus").Transport(kompanijaTest.GetProdajnoMesto("Gigatron"), zahtev, 3);
+            Kupac kupac = new Kupac("Stefan Simanic", 500);
+            kupac.Kupi(kompanijaTest.GetProdajnoMesto("Gigatron"), 1, NacinPlacanja.Kes);
         }
     }
 }
