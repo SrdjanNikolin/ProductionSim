@@ -5,6 +5,7 @@ using ProductionSimulation.Proizvodi;
 using ProductionSimulation.Zaposleni;
 using System.Linq;
 using ProductionSimulation.Logger;
+using System.Text;
 
 namespace ProductionSimulation.Fabrike
 {
@@ -19,6 +20,7 @@ namespace ProductionSimulation.Fabrike
             ListaRadnika = new List<Radnik>();
             Naziv = naziv;
         }
+        //TODO: validacija za dodavanje i dobavljanje radnika
         public void DodajRadnika(string ime, string zaduzenje, int id, int nadredjeni = 0)
         {
             ListaRadnika.Add(new Radnik(ime, zaduzenje, id, nadredjeni));
@@ -28,14 +30,13 @@ namespace ProductionSimulation.Fabrike
             return ListaRadnika.Find(r => r.Id == id);
         }
         public void KreirajProizvod(int kolicina, int id, string nazivProizvoda, int cena, int nadzornik)
-        {
-            //preimenuj
-            int n = 0;
+        {          
             if(kolicina == 0)
             {
                 Console.WriteLine("Kolicina ne moze da bude 0.");
                 return;
-            }                       
+            }
+            int proizvodCount = 0;
             string trenutniNadzornik;
             if(ListaRadnika.Find(r => r.Id == nadzornik) != null)
             {
@@ -48,17 +49,19 @@ namespace ProductionSimulation.Fabrike
             Log logger = new Log();
             DateTime time = DateTime.Now;           
             string message = $"Kreiran proizvod: Proizvod ID: [{id}], Naziv: [{nazivProizvoda}], Fabrika: [{Naziv}], Nadzornik: [{trenutniNadzornik}]";
-            while (n < kolicina)
+            while (proizvodCount < kolicina)
             {
                 listaProizvoda.Add(new Proizvod(id, nazivProizvoda, cena));
                 logger.LogAction(time, "ProizvodnjaLog", message);
-                n++;
+                proizvodCount++;
             }
         }
-        public void Transport(ProdajnoMesto mesto, Dictionary<int, int> zahtev, int nadzornik)
+        public void Transport(ProdajnoMesto mesto, Dictionary<int, int> zahtev, Radnik nadzornik)
         {
-            //preimenuj
             int kolicina = 0;
+            StringBuilder message = new StringBuilder($"Transport: Naziv fabrike: [{Naziv}], Naziv odredista: [{mesto.Naziv}], Nadzornik: [{nadzornik.Ime}], proizvodi: ");
+            StringBuilder imeProizvoda = new StringBuilder();
+            
             foreach(KeyValuePair<int, int> item in zahtev)
             {
                 while(kolicina < item.Value)
@@ -66,17 +69,31 @@ namespace ProductionSimulation.Fabrike
                     if(listaProizvoda.FirstOrDefault(p => p.Id == item.Key) != null)
                     {
                         mesto.ListaProizvoda.Add(listaProizvoda.Find(p => p.Id == item.Key));
+                        if (!imeProizvoda.Equals(listaProizvoda.Find(p => p.Id == item.Key).Naziv))
+                        {
+                            imeProizvoda.Clear();
+                            imeProizvoda.Append(listaProizvoda.Find(p => p.Id == item.Key).Naziv);
+                        }
                         var removeItem = listaProizvoda.First(p => p.Id == item.Key);
                         listaProizvoda.Remove(removeItem);
                         kolicina++;
                     }else
                     {
                         Console.WriteLine($"Nema vise proizvoda sa Id od {item.Key}");
-                        kolicina = 0;
                         break;
                     }
                 }
+                if(kolicina != 0)
+                {
+                    message.Append($"[{kolicina}] x [{imeProizvoda.ToString()}], ");
+                }              
                 kolicina = 0;
+            }
+            if(imeProizvoda.Length > 0)
+            {
+                Log logger = new Log();
+                DateTime time = DateTime.Now;
+                logger.LogAction(time, "TransportLog", message.ToString());
             }
         }
     }

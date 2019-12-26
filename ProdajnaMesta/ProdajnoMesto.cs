@@ -49,12 +49,10 @@ namespace ProductionSimulation.ProdajnaMesta
                     input = Console.ReadLine();
                     if (input != "da" && input != "ne")
                     {
-                        //checkYesNo = false;
                         continue;
                     }
                     else if (input == "da")
                     {
-                        //checkInput = false;
                         break;
                     }
                     else
@@ -68,7 +66,7 @@ namespace ProductionSimulation.ProdajnaMesta
             //log
             DateTime time = DateTime.Now;
             Log logger = new Log();
-            StringBuilder builder = new StringBuilder($"[{time.ToString()}] Poslat je zahtev za: ");
+            StringBuilder builder = new StringBuilder("Poslat je zahtev za: ");
             foreach(KeyValuePair<int, int> item in zahtev)
             {
                 builder.Append($"[{item.Value}] proizvoda sa id [{item.Key}], ");
