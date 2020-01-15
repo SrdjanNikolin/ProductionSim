@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using ProductionSimulation.Proizvodi;
 using ProductionSimulation.Zaposleni;
+using ProductionSimulation.Validacija;
+using ProductionSimulation.Logger;
+using System.Text;
 
 namespace ProductionSimulation.ProdajnaMesta
 {
@@ -20,58 +23,55 @@ namespace ProductionSimulation.ProdajnaMesta
         {
             ListaZaposlenih.Add(new Radnik(ime, zaduzenje, id, nadredjeni));
         }
-        private int[] Zahtev() //Open Closed Principle, pogledati
-        {
-            int[] order = new int[2];
-            Console.WriteLine("Molimo vas izaberite opcije: 1.Dodati monitore, 2. Dodati Tastature, 3. Exit");
-            string input;
-            int result;
-            int kolicina;
-            do
-            {
-                Console.Write("Izaberite opciju: ");
-                input = Console.ReadLine();
-                bool opcija = Int32.TryParse(input, out result);
-                if(result == 1)
-                {
-                    Console.Write("Unesite zeljenu kolicinu monitora: ");
-                    input = Console.ReadLine();
-                    bool provera = Int32.TryParse(input, out kolicina);
-                    if(provera != false)
-                    {
-                        order[0] =+ kolicina;
-                    }else
-                    {
-                        Console.WriteLine("Unesite odgovarajucu kolicinu.");
-                    }
-                }
-            }while(result != 3);
-            return order;      
-        }
-        public int[] ZahtevVersion1(int kolicinaMonitora, int kolicinaTastatura)
-        {
-            int[] array = new int[2];
-            array[0] = kolicinaMonitora;
-            array[1] = kolicinaTastatura;
-            return array;
-        }
-        public Dictionary<int, int> ZahtevVersion2()
+        public Dictionary<int, int> ZahtevZaIsporuku()
         {
             Dictionary<int, int> zahtev = new Dictionary<int, int>();
-            bool checkInput;
+            bool checkInput = false;
             string input;
-            int result;
+            int idProizvoda = 0;
+            int kolicinaProizvoda = 0;
+            ValidacijaProizvoda validacija = new ValidacijaProizvoda();
             do
             {
-                //ask koji proizvod id
-                input = Console.ReadLine();
-                checkInput = Int32.TryParse(input, out result);
-                if(!checkInput)
+                validacija.Validacija(ref idProizvoda, ref kolicinaProizvoda);
+                if (!zahtev.ContainsKey(idProizvoda))
                 {
-                    continue;
+                    zahtev.Add(idProizvoda, kolicinaProizvoda);
                 }
-                
-            }while(checkInput == false);
+                else
+                {
+                    zahtev[idProizvoda] += kolicinaProizvoda;
+                }
+                Console.WriteLine("Nastaviti sa zahtevima? uneti da ili ne");
+                do
+                {
+                    input = Console.ReadLine();
+                    if (input != "da" && input != "ne")
+                    {
+                        continue;
+                    }
+                    else if (input == "da")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        checkInput = true;
+                        break;
+                    }
+                } while (checkInput == false);
+            } while (checkInput == false);
+
+            //log
+            DateTime time = DateTime.Now;
+            Log logger = new Log();
+            StringBuilder builder = new StringBuilder("Poslat je zahtev za: ");
+            foreach(KeyValuePair<int, int> item in zahtev)
+            {
+                builder.Append($"[{item.Value}] proizvoda sa id [{item.Key}], ");
+            }
+            builder.Remove(builder.Length - 2, 2);
+            logger.LogAction(time, "ZahtevLog", builder.ToString());
             return zahtev;
         }
     }
