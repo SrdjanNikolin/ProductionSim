@@ -27,7 +27,6 @@ namespace ProductionSimulation.ProdajnaMesta
         {
             Dictionary<int, int> zahtev = new Dictionary<int, int>();
             bool checkInput = false;
-            //bool checkYesNo;
             string input;
             int idProizvoda = 0;
             int kolicinaProizvoda = 0;

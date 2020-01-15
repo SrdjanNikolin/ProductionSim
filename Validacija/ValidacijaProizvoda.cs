@@ -2,6 +2,7 @@
 
 namespace ProductionSimulation.Validacija
 {
+    //TODO: Mozda promeniti u validacujuZahteva? Pogledati svakako...
     public class ValidacijaProizvoda
     {
         public void Validacija (ref int id, ref int kolicina)

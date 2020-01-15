@@ -21,6 +21,7 @@ namespace ProductionSimulation
             kompanijaTest.GetFabrika("Asus").KreirajProizvod(12, 2, "Tastatura", 50, 2);
             kompanijaTest.GetFabrika("Asus").KreirajProizvod(30, 3, "Mis", 15, 3);
             Dictionary<int, int> zahtev = kompanijaTest.GetProdajnoMesto("Gigatron").ZahtevZaIsporuku();
+            //TODO: dodati u zahtev ime prodajnog mesta i proveriti
             kompanijaTest.GetFabrika("Asus").Transport(kompanijaTest.GetProdajnoMesto("Gigatron"), zahtev, kompanijaTest.GetFabrika("Asus").DobaviRadnika(3));
             Kupac kupac = new Kupac("Stefan Simanic", 500, NacinPlacanja.Kes);
             kupac.Kupi(kompanijaTest.GetProdajnoMesto("Gigatron"), 1, kupac.NacinPlacanja);
